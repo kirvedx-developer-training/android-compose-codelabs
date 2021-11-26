@@ -21,6 +21,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import com.codelabs.state.ui.StateCodelabTheme
 
 class TodoActivity : AppCompatActivity() {
@@ -33,8 +36,28 @@ class TodoActivity : AppCompatActivity() {
             StateCodelabTheme {
                 Surface {
                     // TODO: build the screen in compose
+                    TodoActivityScreen( todoViewModel = todoViewModel )
                 }
             }
         }
     }
+}
+
+@Composable
+fun TodoActivityScreen( todoViewModel: TodoViewModel ) {
+    // We are removing the LiveData approach and have implemented a mutatableStateListOf
+    // approach
+    //val items: List<TodoItem> by todoViewModel.todoItems.observeAsState( listOf() )
+    //val items = listOf<TodoItem>() // in the next steps we'll complete this
+
+    TodoScreen(
+        //items = items,
+        items = todoViewModel.todoItems,
+        currentlyEditing = todoViewModel.currentEditItem,
+        onAddItem = todoViewModel::addItem, // method reference syntax, which is the same as
+        onRemoveItem = todoViewModel::removeItem, // using { todoViewModel.addItem( it ) }
+        onStartEdit = todoViewModel::onEditItemSelected,
+        onEditItemChange = todoViewModel::onEditItemChange,
+        onEditDone = todoViewModel::onEditDone
+    )
 }
