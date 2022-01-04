@@ -93,6 +93,8 @@
             android:paddingBottom="@dimen/fab_bottom_padding"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <!-- Removing the constraint layout as per the Compose and Views Together migration
+                 strategy. We'll be replacing this with a ComposeView...
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -156,6 +158,14 @@
                     tools:text="Details about the plant" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+            End of constraint layout removal -->
+
+            <!-- Add a ComposeView instead -->
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/compose_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <!-- We're now ready to migrate t he plant details screen to compose! -->
 
         </androidx.core.widget.NestedScrollView>
 
